@@ -44,6 +44,13 @@ def run(filename):
       reset()
       continue
     elif mainsect == "out":
+      subsect = parse(code[line], 4, "/")
+      if str(subsect)[0] == ":":
+        subsect = parse(code[line], 5, "/")
+        if not subsect in variables:
+          print("Error on Line "+str(line+1)+": variable not declared")
+        subsect = variabledata[variables.index(subsect)]
+      print(subsect)
       reset()
       continue
     elif mainsect == "go":
