@@ -49,12 +49,19 @@ def run(filename):
         subsect = parse(code[line], 5, "/")
         if not subsect in variables:
           print("Error on Line "+str(line+1)+": variable not declared")
+          quit()
         subsect = variabledata[variables.index(subsect)]
       print(subsect)
       reset()
       continue
     elif mainsect == "go":
       subsect = parse(code[line], 3, "/")
+      if str(subsect)[0] == ":":
+        subsect = parse(code[line], 4, "/")
+        if not subsect in variables:
+          print("Error on Line "+str(line+1)+": variable not declared")
+          quit()
+        subsect = variabledata[variables.index(subsect)]
       try:
         int(subsect)
       except:
