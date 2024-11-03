@@ -32,6 +32,15 @@ def run(filename):
   while line < length:
     mainsect = parse(code[line], 0, "/")
     if mainsect == "let":
+      subsect = parse(code[line], 4, "/")
+      if subsect in variables:
+        variablenum = variables.index(subsect)
+      else:
+        variables.append(subsect)
+        variabledata.append("")
+        variablenum = variables.index(subsect)
+      subsect = parse(code[line], 5+len(subsect), "/")
+      variabledata[variablenum] = subsect
       reset()
       continue
     elif mainsect == "out":
