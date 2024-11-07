@@ -11,14 +11,27 @@ def reset():
   subsubsect = ""
   line += 1
 
-def parse(text, start, char):
+def parse(text, start, chars):
   i = 0
   returnVal = ""
-  while str(text)[start+i] != char:
+  while str(text)[start+i] not in chars:
     returnVal += str(text)[start+i]
     i += 1
   return returnVal
 
+charss = ["*", "+", "-", "..", "("]
+def math(line, start):
+  global charss
+  one = 0
+  two = 0
+  text = parse(line, start, charss]
+  if text[0] == ":":
+        text = parse(line, start+1, charss)
+        if not subsect in variables:
+          return "variablenotdeclared"
+          quit()
+        one = variabledata[variables.index(text)]
+    
 def run(filename):
   cod = open(filename, "r")
   code = cod.readlines()
@@ -30,23 +43,23 @@ def run(filename):
   line = 0
   length = len(code)
   while line < length:
-    mainsect = parse(code[line], 0, "/")
+    mainsect = parse(code[line], 0, list("/"))
     if mainsect == "let":
-      subsect = parse(code[line], 4, "/")
+      subsect = parse(code[line], 4, list("/"))
       if subsect in variables:
         variablenum = variables.index(subsect)
       else:
         variables.append(subsect)
         variabledata.append("")
         variablenum = variables.index(subsect)
-      subsect = parse(code[line], 5+len(subsect), "/")
+      subsect = parse(code[line], 5+len(subsect), list("/"))
       variabledata[variablenum] = subsect
       reset()
       continue
     elif mainsect == "out":
-      subsect = parse(code[line], 4, "/")
+      subsect = parse(code[line], 4, list("/"))
       if str(subsect)[0] == ":":
-        subsect = parse(code[line], 5, "/")
+        subsect = parse(code[line], 5, list("/"))
         if not subsect in variables:
           print("Error on Line "+str(line+1)+": variable not declared")
           quit()
@@ -55,9 +68,9 @@ def run(filename):
       reset()
       continue
     elif mainsect == "go":
-      subsect = parse(code[line], 3, "/")
+      subsect = parse(code[line], 3, list("/"))
       if str(subsect)[0] == ":":
-        subsect = parse(code[line], 4, "/")
+        subsect = parse(code[line], 4, list("/"))
         if not subsect in variables:
           print("Error on Line "+str(line+1)+": variable not declared")
           quit()
