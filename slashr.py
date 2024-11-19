@@ -19,19 +19,47 @@ def parse(text, start, chars):
     i += 1
   return returnVal
 
-charss = ["*", "+", "-", "..", "("]
+charss = ["*", "+", "-", "|", "%"]
 def math(line, start):
   global charss
   one = 0
   two = 0
-  text = parse(line, start, charss]
+  inc = 0
+  operation = ""
+  text = parse(line, start, charss)
   if text[0] == ":":
-        text = parse(line, start+1, charss)
+        subsect = parse(line, start+1, charss)
         if not subsect in variables:
           return "variablenotdeclared"
-          quit()
-        one = variabledata[variables.index(text)]
-    
+        one = variabledata[variables.index(subsect)]
+        inc = 1
+  else:
+      one = text
+      print(one)
+  text = line[start+len(str(text))]
+  if text not in charss:
+    return "operation not found"
+  operation = text
+  text = parse(line + "¬", start+1+inc+len(str(one)), "¬")
+  if text[0] == ":":
+        subsect = parse(line+"¬", start+2+inc+len(str(one)), "¬")
+        if not subsect in variables:
+          return "variablenotdeclared"
+        two = variabledata[variables.index(subsect)]
+  else:
+      two = text
+  print(one, two)
+  if operation == "*":
+    return int(one) * int(two)
+  if operation == "+":
+    return int(one) + int(two)
+  if operation == "-":
+    return int(one) - int(two)
+  if operation == "|":
+    return int(one) / int(two)
+  if operation == "%":
+    return int(one) % int(two)
+  
 def run(filename):
   cod = open(filename, "r")
   code = cod.readlines()
