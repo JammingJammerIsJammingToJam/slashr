@@ -1,6 +1,7 @@
 line = 0
 variables = []
 variabledata = []
+from decimal import Decimal
 def reset():
   global line
   global mainsect
@@ -50,17 +51,15 @@ def math(line, start):
     two = text
   print(one, two)
   if operation == "*":
-    return int(one) * int(two)
+    return Decimal(one) * Decimal(two)
   if operation == "+":
-    return int(one) + int(two)
+    return Decimal(one) + Decimal(two)
   if operation == "-":
-    return int(one) - int(two)
+    return Decimal(one) - Decimal(two)
   if operation == "|":
-    return int(one) / int(two)
+    return Decimal(one) / Decimal(two)
   if operation == "%":
-    return int(one) % int(two)
-  if operation == "^":
-    return int(one) ^ int(two)
+    return Decimal(one) % Decimal(two)
   
 def run(filename):
   cod = open(filename, "r")
