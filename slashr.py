@@ -28,26 +28,26 @@ def math(line, start):
   operation = ""
   text = parse(line, start, charss)
   if text[0] == ":":
-        subsect = parse(line, start+1, charss)
-        if not subsect in variables:
-          return "variablenotdeclared"
-        one = variabledata[variables.index(subsect)]
-        inc = 1
+    subsect = parse(line, start+1, charss)
+    if not subsect in variables:
+        return "variablenotdeclared"
+    one = variabledata[variables.index(subsect)]
+    inc = 1
   else:
-      one = text
-      print(one)
+    one = text
+    print(one)
   text = line[start+len(str(text))]
   if text not in charss:
     return "operation not found"
   operation = text
   text = parse(line + "¬", start+1+inc+len(str(one)), "¬")
   if text[0] == ":":
-        subsect = parse(line+"¬", start+2+inc+len(str(one)), "¬")
-        if not subsect in variables:
-          return "variablenotdeclared"
-        two = variabledata[variables.index(subsect)]
+    subsect = parse(line+"¬", start+2+inc+len(str(one)), "¬")
+    if not subsect in variables:
+        return "variablenotdeclared"
+    two = variabledata[variables.index(subsect)]
   else:
-      two = text
+    two = text
   print(one, two)
   if operation == "*":
     return int(one) * int(two)
@@ -81,7 +81,10 @@ def run(filename):
         variabledata.append("")
         variablenum = variables.index(subsect)
       subsect = parse(code[line], 5+len(subsect), list("/"))
-      variabledata[variablenum] = subsect
+      if subsect[0] == "(" and subsect[-1] == ")":
+          variabledata[variablenum] = math(subsect[1:-1])
+      else:
+          variabledata[variablenum] = subsect
       reset()
       continue
     elif mainsect == "out":
@@ -117,6 +120,14 @@ def run(filename):
       line = templine - 1
       reset()
       continue
+    elif mainsect == "del":
+      subsect = parse(code[line], 4, list("/"))
+      if subsect in variables:
+        variablenum = variables.index(subsect)
+      else:
+          print("Error on Line"+str(line+1)+": variable not declared")
+      variables.pop(variablenum)
+      variabledata.pop(variablenum)
     elif mainsect == "if":
       reset()
       continue
