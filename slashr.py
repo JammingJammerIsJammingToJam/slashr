@@ -82,7 +82,7 @@ def run(filename):
         variablenum = variables.index(subsect)
       subsect = parse(code[line], 5+len(subsect), list("/"))
       if subsect[0] == "(" and subsect[-1] == ")":
-          variabledata[variablenum] = math(subsect[1:-1])
+          variabledata[variablenum] = math(subsect[1:-1], 0)
       else:
           variabledata[variablenum] = subsect
       reset()
@@ -128,7 +128,12 @@ def run(filename):
           print("Error on Line"+str(line+1)+": variable not declared")
       variables.pop(variablenum)
       variabledata.pop(variablenum)
+      reset()
+      continue
     elif mainsect == "if":
+      reset()
+      continue
+    elif mainsect == "":
       reset()
       continue
     else:
