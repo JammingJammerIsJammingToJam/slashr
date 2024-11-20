@@ -59,6 +59,8 @@ def math(line, start):
     return int(one) / int(two)
   if operation == "%":
     return int(one) % int(two)
+  if operation == "^":
+    return int(one) ^ int(two)
   
 def run(filename):
   cod = open(filename, "r")
