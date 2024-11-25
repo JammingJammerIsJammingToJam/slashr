@@ -20,7 +20,7 @@ def parse(text, start, chars):
     i += 1
   return returnVal
 
-charss = ["*", "+", "-", "|", "%"]
+charss = ["*", "+", "-", "|", "%", "^"]
 def math(line, start):
   global charss
   one = 0
@@ -59,6 +59,8 @@ def math(line, start):
   if operation == "|":
     return Decimal(one) / Decimal(two)
   if operation == "%":
+    return Decimal(one) % Decimal(two)
+  if operation == "^":
     return Decimal(one) % Decimal(two)
   
 def run(filename):
