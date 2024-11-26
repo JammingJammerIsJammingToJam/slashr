@@ -62,6 +62,12 @@ def math(line, start):
     return Decimal(one) % Decimal(two)
   if operation == "^":
     return Decimal(one) % Decimal(two)
+  if operation == ">":
+    return Decimal(one) > Decimal(two)
+  if operation == "<":
+    return Decimal(one) < Decimal(two)
+  if operation == "=":
+    return Decimal(one) == Decimal(two)
   
 def run(filename):
   cod = open(filename, "r")
