@@ -11,7 +11,6 @@ def reset():
   subsect = ""
   subsubsect = ""
   line += 1
-
 def parse(text, start, chars):
   i = 0
   returnVal = ""
@@ -28,6 +27,7 @@ def math(line, start, linenum):
   inc = 0
   operation = ""
   text = parse(line, start, charss)
+  leng = len(str(text))
   if text[0] == ":":
     subsect = parse(line, start+1, charss)
     if not subsect in variables:
@@ -46,9 +46,9 @@ def math(line, start, linenum):
   if text in charss:
     operation += text
     inc += 1
-  text = parse(line + "¬", start+1+inc+len(str(one)), "¬")
+  text = parse(line + "¬", start+1+leng, "¬")
   if text[0] == ":":
-    subsect = parse(line+"¬", start+2+inc+len(str(one)), "¬")
+    subsect = parse(line+"¬", start+2+leng, "¬")
     if not subsect in variables:
       print("Error on Line "+str(linenum+1)+": variable not declared")
       quit()
@@ -80,7 +80,7 @@ def math(line, start, linenum):
   else:
     print("Error on Line "+str(linenum+1)+": operation not found")
     quit()
-  
+
 def run(filename):
   cod = open(filename, "r")
   code = cod.readlines()
@@ -153,6 +153,7 @@ def run(filename):
       continue
     elif mainsect == "if":
       subsect = parse(code[line], 3, list("/"))
+      leng = len(subsect)
       if subsect[0] == "(" and subsect[-1] == ")":
           subsect = math(subsect[1:-1], 0, line)
       try:
@@ -161,11 +162,9 @@ def run(filename):
         print("Error on Line"+str(line+1)+": expected boolean value")
         quit()
       if subsect == False:
-        subsect = str(subsect)
-        leng = len(subsect)
-        subsect = parse(code[line], 6+leng, list("/"))
+        subsect = parse(code[line], 4+leng, list("/"))
         if str(subsect)[0] == ":":
-          subsect = parse(code[line], 7 + leng, list("/"))
+          subsect = parse(code[line], subsect[1:], list("/"))
           if not subsect in variables:
             print("Error on Line "+str(line+1)+": variable not declared")
             quit()
