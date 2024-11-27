@@ -20,7 +20,7 @@ def parse(text, start, chars):
     i += 1
   return returnVal
 
-charss = ["*", "+", "-", "|", "%", "^", ">", "<"]
+charss = ["*", "+", "-", "|", "%", "^", ">", "<", "="]
 def math(line, start, linenum):
   global charss
   one = 0
@@ -36,7 +36,6 @@ def math(line, start, linenum):
     inc = 1
   else:
     one = text
-    print(one)
   text = line[start+len(str(text))]
   if text not in charss:
     print("Error on Line "+str(linenum+1)+": operation not found")
@@ -55,7 +54,6 @@ def math(line, start, linenum):
     two = variabledata[variables.index(subsect)]
   else:
     two = text
-  print(one, two)
   if operation == "*":
     return Decimal(one) * Decimal(two)
   if operation == "+":
