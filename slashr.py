@@ -36,12 +36,14 @@ def math(line, start, linenum):
     inc = 1
   else:
     one = text
-  text = line[start+len(str(text))]
+  length = len(str(text))
+  text = line[start+length]
   if text not in charss:
     print("Error on Line "+str(linenum+1)+": operation not found")
     quit()
   operation = text
-  text = line[start+len(str(text))+1]
+  text = line[start+length+1]
+  print(text)
   if text in charss:
     operation += text
     inc += 1
@@ -54,6 +56,7 @@ def math(line, start, linenum):
     two = variabledata[variables.index(subsect)]
   else:
     two = text
+  print(operation)
   if operation == "*":
     return Decimal(one) * Decimal(two)
   if operation == "+":
@@ -152,13 +155,14 @@ def run(filename):
       continue
     elif mainsect == "if":
       subsect = parse(code[line], 3, list("/"))
+      print(subsect[1:-1])
       if subsect[0] == "(" and subsect[-1] == ")":
           subsect = math(subsect[1:-1], 0, line)
-      if subsect != "True" or "False":
+      if subsect != True or False:
         print("Error on Line"+str(line+1)+": expected boolean value")
         quit()
-      elif subsect == "False":
-        subsect = parse(code[line], 6+len(subsect), list("/")
+      elif subsect == False:
+        subsect = parse(code[line], 6+len(subsect), list("/"))
         try:
           int(subsect)
         except:
