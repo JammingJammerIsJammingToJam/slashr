@@ -20,8 +20,8 @@ def parse(text, start, chars):
     i += 1
   return returnVal
 
-charss = ["*", "+", "-", "|", "%", "^"]
-def math(line, start):
+charss = ["*", "+", "-", "|", "%", "^", ">", "<"]
+def math(line, start, linenum):
   global charss
   one = 0
   two = 0
@@ -31,7 +31,7 @@ def math(line, start):
   if text[0] == ":":
     subsect = parse(line, start+1, charss)
     if not subsect in variables:
-        return "variablenotdeclared"
+        print("Error on Line "+str(linenum+1)+": variable not declared")
     one = variabledata[variables.index(subsect)]
     inc = 1
   else:
@@ -39,13 +39,19 @@ def math(line, start):
     print(one)
   text = line[start+len(str(text))]
   if text not in charss:
-    return "operation not found"
+    print("Error on Line "+str(linenum+1)+": operation not found")
+    quit()
   operation = text
+  text = line[start+len(str(text))+1]
+  if text in charss:
+    operation += text
+    inc += 1
   text = parse(line + "¬", start+1+inc+len(str(one)), "¬")
   if text[0] == ":":
     subsect = parse(line+"¬", start+2+inc+len(str(one)), "¬")
     if not subsect in variables:
-        return "variablenotdeclared"
+      print("Error on Line "+str(linenum+1)+": variable not declared")
+      quit()
     two = variabledata[variables.index(subsect)]
   else:
     two = text
@@ -68,6 +74,13 @@ def math(line, start):
     return Decimal(one) < Decimal(two)
   if operation == "=":
     return Decimal(one) == Decimal(two)
+  if operation == ">=":
+    return Decimal(one) >= Decimal(two)
+  if operation == "<=":
+    return Decimal(one) <= Decimal(two)
+  else:
+    print("Error on Line "+str(linenum+1)+": operation not found")
+    quit()
   
 def run(filename):
   cod = open(filename, "r")
@@ -91,7 +104,7 @@ def run(filename):
         variablenum = variables.index(subsect)
       subsect = parse(code[line], 5+len(subsect), list("/"))
       if subsect[0] == "(" and subsect[-1] == ")":
-          variabledata[variablenum] = math(subsect[1:-1], 0)
+          variabledata[variablenum] = math(subsect[1:-1], 0, line)
       else:
           variabledata[variablenum] = subsect
       reset()
