@@ -159,9 +159,18 @@ def run(filename):
         quit()
       elif subsect == "False":
         subsect = parse(code[line], 6+len(subsect), list("/")
+        try:
+          int(subsect)
+        except:
+          print("Error on Line "+str(line+1)+": expected int")
+          quit()
+        if int(subsect) < 1:
+          print("Error on Line "+str(line+1)+": expected value of at least 1")
+          quit()
         templine = int(subsect)-1
         if templine >= length:
           print("Error on Line "+str(line+1)+": line doesn't exist")
+          quit()
         line = templine - 1
       reset()
       continue
