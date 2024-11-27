@@ -20,8 +20,8 @@ def parse(text, start, chars):
     i += 1
   return returnVal
 
-charss = ["*", "+", "-", "|", "%", "^"]
-def math(line, start):
+charss = ["*", "+", "-", "|", "%", "^", ">", "<", "="]
+def math(line, start, linenum):
   global charss
   one = 0
   two = 0
@@ -31,25 +31,30 @@ def math(line, start):
   if text[0] == ":":
     subsect = parse(line, start+1, charss)
     if not subsect in variables:
-        return "variablenotdeclared"
+        print("Error on Line "+str(linenum+1)+": variable not declared")
     one = variabledata[variables.index(subsect)]
     inc = 1
   else:
     one = text
-    print(one)
-  text = line[start+len(str(text))]
+  length = len(str(text))
+  text = line[start+length]
   if text not in charss:
-    return "operation not found"
+    print("Error on Line "+str(linenum+1)+": operation not found")
+    quit()
   operation = text
+  text = line[start+length+1]
+  if text in charss:
+    operation += text
+    inc += 1
   text = parse(line + "¬", start+1+inc+len(str(one)), "¬")
   if text[0] == ":":
     subsect = parse(line+"¬", start+2+inc+len(str(one)), "¬")
     if not subsect in variables:
-        return "variablenotdeclared"
+      print("Error on Line "+str(linenum+1)+": variable not declared")
+      quit()
     two = variabledata[variables.index(subsect)]
   else:
     two = text
-  print(one, two)
   if operation == "*":
     return Decimal(one) * Decimal(two)
   if operation == "+":
@@ -62,6 +67,19 @@ def math(line, start):
     return Decimal(one) % Decimal(two)
   if operation == "^":
     return Decimal(one) % Decimal(two)
+  if operation == ">":
+    return Decimal(one) > Decimal(two)
+  if operation == "<":
+    return Decimal(one) < Decimal(two)
+  if operation == "=":
+    return Decimal(one) == Decimal(two)
+  if operation == ">=":
+    return Decimal(one) >= Decimal(two)
+  if operation == "<=":
+    return Decimal(one) <= Decimal(two)
+  else:
+    print("Error on Line "+str(linenum+1)+": operation not found")
+    quit()
   
 def run(filename):
   cod = open(filename, "r")
@@ -85,7 +103,7 @@ def run(filename):
         variablenum = variables.index(subsect)
       subsect = parse(code[line], 5+len(subsect), list("/"))
       if subsect[0] == "(" and subsect[-1] == ")":
-          variabledata[variablenum] = math(subsect[1:-1], 0)
+          variabledata[variablenum] = math(subsect[1:-1], 0, line)
       else:
           variabledata[variablenum] = subsect
       reset()
@@ -134,6 +152,37 @@ def run(filename):
       reset()
       continue
     elif mainsect == "if":
+      subsect = parse(code[line], 3, list("/"))
+      if subsect[0] == "(" and subsect[-1] == ")":
+          subsect = math(subsect[1:-1], 0, line)
+      try:
+        subsect = bool(subsect)
+      except:
+        print("Error on Line"+str(line+1)+": expected boolean value")
+        quit()
+      if subsect == False:
+        subsect = str(subsect)
+        leng = len(subsect)
+        subsect = parse(code[line], 6+leng, list("/"))
+        if str(subsect)[0] == ":":
+          subsect = parse(code[line], 7 + leng, list("/"))
+          if not subsect in variables:
+            print("Error on Line "+str(line+1)+": variable not declared")
+            quit()
+          subsect = variabledata[variables.index(subsect)]
+        try:
+          int(subsect)
+        except:
+          print("Error on Line "+str(line+1)+": expected int")
+          quit()
+        if int(subsect) < 1:
+          print("Error on Line "+str(line+1)+": expected value of at least 1")
+          quit()
+        templine = int(subsect)-1
+        if templine >= length:
+          print("Error on Line "+str(line+1)+": line doesn't exist")
+          quit()
+        line = templine - 1
       reset()
       continue
     elif mainsect == "":
