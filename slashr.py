@@ -151,6 +151,18 @@ def run(filename):
       reset()
       continue
     elif mainsect == "if":
+      subsect = parse(code[line], 3, list("/"))
+      if subsect[0] == "(" and subsect[-1] == ")":
+          subsect = math(subsect[1:-1], 0, line)
+      if subsect != "True" or "False":
+        print("Error on Line"+str(line+1)+": expected boolean value")
+        quit()
+      elif subsect == "False":
+        subsect = parse(code[line], 6+len(subsect), list("/")
+        templine = int(subsect)-1
+        if templine >= length:
+          print("Error on Line "+str(line+1)+": line doesn't exist")
+        line = templine - 1
       reset()
       continue
     elif mainsect == "":
