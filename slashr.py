@@ -43,7 +43,6 @@ def math(line, start, linenum):
     quit()
   operation = text
   text = line[start+length+1]
-  print(text)
   if text in charss:
     operation += text
     inc += 1
@@ -56,7 +55,6 @@ def math(line, start, linenum):
     two = variabledata[variables.index(subsect)]
   else:
     two = text
-  print(operation)
   if operation == "*":
     return Decimal(one) * Decimal(two)
   if operation == "+":
@@ -164,7 +162,14 @@ def run(filename):
         quit()
       if subsect == False:
         subsect = str(subsect)
-        subsect = parse(code[line], 6+len(subsect), list("/"))
+        leng = len(subsect)
+        subsect = parse(code[line], 6+leng, list("/"))
+        if str(subsect)[0] == ":":
+          subsect = parse(code[line], 7 + leng, list("/"))
+          if not subsect in variables:
+            print("Error on Line "+str(line+1)+": variable not declared")
+            quit()
+          subsect = variabledata[variables.index(subsect)]
         try:
           int(subsect)
         except:
