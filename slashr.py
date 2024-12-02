@@ -21,7 +21,8 @@ def parse(text, start, chars):
   return returnVal
 
 @cache
-def operatin(one, two, operation, linenum):
+def operatin(one, two, operation):
+  global line
   if operation == "*":
     return Decimal(one) * Decimal(two)
   if operation == "+":
@@ -45,7 +46,7 @@ def operatin(one, two, operation, linenum):
   if operation == "<=":
     return Decimal(one) <= Decimal(two)
   else:
-    print("Error on Line "+str(linenum+1)+": operation not found")
+    print("Error on Line "+str(line+1)+": operation not found")
     quit()
 
 
