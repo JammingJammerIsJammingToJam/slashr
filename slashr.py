@@ -2,6 +2,7 @@ line = 0
 variables = []
 variabledata = []
 from decimal import Decimal
+from functools import cache
 def reset():
   global line
   global mainsect
@@ -18,6 +19,35 @@ def parse(text, start, chars):
     returnVal += str(text)[start+i]
     i += 1
   return returnVal
+
+@cache
+def operatin(one, two, operation, linenum):
+  if operation == "*":
+    return Decimal(one) * Decimal(two)
+  if operation == "+":
+    return Decimal(one) + Decimal(two)
+  if operation == "-":
+    return Decimal(one) - Decimal(two)
+  if operation == "|":
+    return Decimal(one) / Decimal(two)
+  if operation == "%":
+    return Decimal(one) % Decimal(two)
+  if operation == "^":
+    return Decimal(one) % Decimal(two)
+  if operation == ">":
+    return Decimal(one) > Decimal(two)
+  if operation == "<":
+    return Decimal(one) < Decimal(two)
+  if operation == "=":
+    return Decimal(one) == Decimal(two)
+  if operation == ">=":
+    return Decimal(one) >= Decimal(two)
+  if operation == "<=":
+    return Decimal(one) <= Decimal(two)
+  else:
+    print("Error on Line "+str(linenum+1)+": operation not found")
+    quit()
+
 
 charss = ["*", "+", "-", "|", "%", "^", ">", "<", "="]
 def math(line, start, linenum):
@@ -55,31 +85,7 @@ def math(line, start, linenum):
     two = variabledata[variables.index(subsect)]
   else:
     two = text
-  if operation == "*":
-    return Decimal(one) * Decimal(two)
-  if operation == "+":
-    return Decimal(one) + Decimal(two)
-  if operation == "-":
-    return Decimal(one) - Decimal(two)
-  if operation == "|":
-    return Decimal(one) / Decimal(two)
-  if operation == "%":
-    return Decimal(one) % Decimal(two)
-  if operation == "^":
-    return Decimal(one) % Decimal(two)
-  if operation == ">":
-    return Decimal(one) > Decimal(two)
-  if operation == "<":
-    return Decimal(one) < Decimal(two)
-  if operation == "=":
-    return Decimal(one) == Decimal(two)
-  if operation == ">=":
-    return Decimal(one) >= Decimal(two)
-  if operation == "<=":
-    return Decimal(one) <= Decimal(two)
-  else:
-    print("Error on Line "+str(linenum+1)+": operation not found")
-    quit()
+  return operatin(one, two, operation, linenum)
 
 def run(filename):
   cod = open(filename, "r")
