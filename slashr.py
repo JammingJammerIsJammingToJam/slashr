@@ -86,7 +86,7 @@ def math(line, start, linenum):
     two = variabledata[variables.index(subsect)]
   else:
     two = text
-  return operatin(one, two, operation, linenum)
+  return operatin(one, two, operation)
 
 def run(filename):
   cod = open(filename, "r")
