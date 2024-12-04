@@ -189,6 +189,15 @@ def run(filename):
         line = templine - 1
       reset()
       continue
+    elif mainsect == "in":
+      subsect = parse(code[line], 3, list("/"))
+      if not subsect in variables:
+          print("Error on Line "+str(line+1)+": variable not declared")
+          quit()
+      variablenum = variables.index(subsect)
+      variabledata[variablenum] = input()
+      reset()
+      continue
     elif mainsect == "":
       reset()
       continue
