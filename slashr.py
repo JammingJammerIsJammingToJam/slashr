@@ -55,7 +55,6 @@ def math(line, start, linenum):
   global charss
   one = 0
   two = 0
-  inc = 0
   operation = ""
   text = parse(line, start, charss)
   leng = len(str(text))
@@ -64,7 +63,6 @@ def math(line, start, linenum):
     if not subsect in variables:
         print("Error on Line "+str(linenum+1)+": variable not declared")
     one = variabledata[variables.index(subsect)]
-    inc = 1
   else:
     one = text
   length = len(str(text))
@@ -76,7 +74,7 @@ def math(line, start, linenum):
   text = line[start+length+1]
   if text in charss:
     operation += text
-    inc += 1
+    leng += 1
   text = parse(line + "¬", start+1+leng, "¬")
   if text[0] == ":":
     subsect = parse(line+"¬", start+2+leng, "¬")
