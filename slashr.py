@@ -81,7 +81,7 @@ def math(line, start, linenum):
     leng += 1
   text = parse(line + "¬", start+1+leng, "¬")
   if text[0] == ":":
-    subsect = parse(line+"¬", start+2+leng, "¬")
+    subsect = text[1:]
     if not subsect in variables:
       print("Error on Line "+str(linenum+1)+": variable not declared")
       quit()
