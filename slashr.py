@@ -7,11 +7,10 @@ def reset():
   global line
   global mainsect
   global subsect
-  global subsubsect
   mainsect = ""
   subsect = ""
-  subsubsect = ""
   line += 1
+
 def parse(text, start, chars):
   i = 0
   returnVal = ""
@@ -96,7 +95,6 @@ def run(filename):
   global line
   global mainsect
   global subsect
-  global subsubsect
   reset()
   line = 0
   length = len(code)
