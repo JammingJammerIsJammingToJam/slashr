@@ -14,7 +14,8 @@ def reset():
 def parse(text, start, chars):
   i = 0
   returnVal = ""
-  while str(text)[start+i] not in chars:
+  temptext = str(text)
+  while temptext[start+i] not in chars:
     returnVal += str(text)[start+i]
     i += 1
   return returnVal
