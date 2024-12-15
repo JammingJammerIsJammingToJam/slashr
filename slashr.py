@@ -16,7 +16,7 @@ def parse(text, start, chars):
   returnVal = ""
   temptext = str(text)
   while temptext[start+i] not in chars:
-    returnVal += str(text)[start+i]
+    returnVal += temptext[start+i]
     i += 1
   return returnVal
 
