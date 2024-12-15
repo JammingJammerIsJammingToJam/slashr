@@ -45,9 +45,8 @@ def operatin(one, two, operation):
     return Decimal(one) >= Decimal(two)
   if operation == "<=":
     return Decimal(one) <= Decimal(two)
-  else:
-    print("Error on Line "+str(line+1)+": operation not found")
-    quit()
+  print("Error on Line "+str(line+1)+": operation not found")
+  quit()
 
 
 charss = ["*", "+", "-", "|", "%", "^", ">", "<", "="]
