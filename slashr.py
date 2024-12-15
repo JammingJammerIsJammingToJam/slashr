@@ -69,13 +69,12 @@ def math(line, start, linenum):
     one = variabledata[variables.index(subsect)]
   else:
     one = text
-  length = len(str(text))
-  text = line[start+length]
+  text = line[start+leng]
   if text not in charss:
     print("Error on Line "+str(linenum+1)+": operation not found")
     quit()
   operation = text
-  text = line[start+length+1]
+  text = line[start+leng+1]
   if text in charsss:
     operation += text
     leng += 1
