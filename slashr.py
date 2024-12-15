@@ -62,7 +62,7 @@ def math(line, start, linenum):
     text = parse(line, start, charss)
   leng = len(str(text))
   if text[0] == ":":
-    subsect = parse(line, start+1, charss)
+    subsect = text[1:]
     if not subsect in variables:
         print("Error on Line "+str(linenum+1)+": variable not declared")
     one = variabledata[variables.index(subsect)]
@@ -125,7 +125,7 @@ def run(filename):
     elif mainsect == "out":
       subsect = parse(code[line], 4, list("/"))
       if str(subsect)[0] == ":":
-        subsect = parse(code[line], 5, list("/"))
+        subsect = subsect[1:]
         if not subsect in variables:
           print("Error on Line "+str(line+1)+": variable not declared")
           quit()
@@ -136,7 +136,7 @@ def run(filename):
     elif mainsect == "go":
       subsect = parse(code[line], 3, list("/"))
       if str(subsect)[0] == ":":
-        subsect = parse(code[line], 4, list("/"))
+        subsect = subsect[1:]
         if not subsect in variables:
           print("Error on Line "+str(line+1)+": variable not declared")
           quit()
@@ -178,7 +178,7 @@ def run(filename):
       if subsect == False:
         subsect = parse(code[line], 4+leng, list("/"))
         if str(subsect)[0] == ":":
-          subsect = parse(code[line], subsect[1:], list("/"))
+          subsect = subsect[1:]
           if not subsect in variables:
             print("Error on Line "+str(line+1)+": variable not declared")
             quit()
