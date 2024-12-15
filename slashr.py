@@ -51,12 +51,17 @@ def operatin(one, two, operation):
 
 
 charss = ["*", "+", "-", "|", "%", "^", ">", "<", "="]
+charsss = ["="]
 def math(line, start, linenum):
   global charss
+  global charsss
   one = 0
   two = 0
   operation = ""
-  text = parse(line, start, charss)
+  if line[0] == "-":
+    text = "-" + parse(line, 1, charss)
+  else:
+    text = parse(line, start, charss)
   leng = len(str(text))
   if text[0] == ":":
     subsect = parse(line, start+1, charss)
@@ -72,7 +77,7 @@ def math(line, start, linenum):
     quit()
   operation = text
   text = line[start+length+1]
-  if text in charss:
+  if text in charsss:
     operation += text
     leng += 1
   text = parse(line + "¬", start+1+leng, "¬")
@@ -110,7 +115,14 @@ def run(filename):
       if subsect[0] == "(" and subsect[-1] == ")":
           variabledata[variablenum] = math(subsect[1:-1], 0, line)
       else:
+          if str(subsect)[0] == ":":
+            subsect = subsect[1:]
+            if not subsect in variables:
+              print("Error on Line "+str(line+1)+": variable not declared")
+              quit()
+            subsect = variabledata[variables.index(subsect)]
           variabledata[variablenum] = subsect
+
       reset()
       continue
     elif mainsect == "out":
