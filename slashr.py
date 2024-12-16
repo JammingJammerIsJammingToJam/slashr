@@ -1,6 +1,6 @@
 #line = 0
 import sys
-sys.setrecursionlimit(9999999999)
+sys.setrecursionlimit(2147483647)
 import os.path
 variables = []
 variabledata = []
@@ -203,7 +203,8 @@ def run(filename):
           print("Error on Line "+str(line+1)+": variable not declared")
           quit()
       variablenum = variables.index(subsect)
-      variabledata[variablenum] = input()
+      subsect = parse(code[line], 4+len(subsect), list("/"))
+      variabledata[variablenum] = input(subsect)
       line = reset(line)
       continue
     elif mainsect == "run":
