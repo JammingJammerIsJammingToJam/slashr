@@ -208,6 +208,12 @@ def run(filename):
       continue
     elif mainsect == "run":
       subsect = parse(code[line], 4, list("/"))
+      if subsect[0] == ":":
+        subsect = subsect[1:]
+        if not subsect in variables:
+          print("Error on Line "+str(line+1)+": variable not declared")
+          quit()
+        subsect = variabledata[variables.index(subsect)]
       if os.path.isfile(subsect) == False:
         print("Error on Line "+str(line+1)+": file not found")
         quit()
