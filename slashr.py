@@ -1,4 +1,7 @@
 #line = 0
+import sys
+sys.setrecursionlimit(9999999999)
+import os.path
 variables = []
 variabledata = []
 from decimal import Decimal
@@ -201,6 +204,14 @@ def run(filename):
           quit()
       variablenum = variables.index(subsect)
       variabledata[variablenum] = input()
+      line = reset(line)
+      continue
+    elif mainsect == "run":
+      subsect = parse(code[line], 4, list("/"))
+      if os.path.isfile(subsect) == False:
+        print("Error on Line "+str(line+1)+": file not found")
+        quit()
+      run(subsect)
       line = reset(line)
       continue
     elif mainsect == "":
