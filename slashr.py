@@ -1,15 +1,14 @@
-line = 0
+#line = 0
 variables = []
 variabledata = []
 from decimal import Decimal
 from functools import cache
-def reset():
-  global line
+def reset(line):
   global mainsect
   global subsect
   mainsect = ""
   subsect = ""
-  line += 1
+  return line+1
 
 def parse(text, start, chars):
   i = 0
@@ -21,8 +20,7 @@ def parse(text, start, chars):
   return returnVal
 
 @cache
-def operatin(one, two, operation):
-  global line
+def operatin(one, two, operation, line):
   if operation == "*":
     return Decimal(one) * Decimal(two)
   if operation == "+":
@@ -87,16 +85,14 @@ def math(line, start, linenum):
     two = variabledata[variables.index(subsect)]
   else:
     two = text
-  return operatin(one, two, operation)
+  return operatin(one, two, operation, linenum)
 
 def run(filename):
   cod = open(filename, "r")
   code = cod.readlines()
-  global line
   global mainsect
   global subsect
-  reset()
-  line = 0
+  line = reset(-1)
   length = len(code)
   while line < length:
     mainsect = parse(code[line], 0, list("/"))
@@ -120,7 +116,7 @@ def run(filename):
             subsect = variabledata[variables.index(subsect)]
           variabledata[variablenum] = subsect
 
-      reset()
+      line = reset(line)
       continue
     elif mainsect == "out":
       subsect = parse(code[line], 4, list("/"))
@@ -131,7 +127,7 @@ def run(filename):
           quit()
         subsect = variabledata[variables.index(subsect)]
       print(subsect)
-      reset()
+      line = reset(line)
       continue
     elif mainsect == "go":
       subsect = parse(code[line], 3, list("/"))
@@ -153,7 +149,7 @@ def run(filename):
       if templine >= length:
         print("Error on Line "+str(line+1)+": line doesn't exist")
       line = templine - 1
-      reset()
+      line = reset(line)
       continue
     elif mainsect == "del":
       subsect = parse(code[line], 4, list("/"))
@@ -163,7 +159,7 @@ def run(filename):
           print("Error on Line"+str(line+1)+": variable not declared")
       variables.pop(variablenum)
       variabledata.pop(variablenum)
-      reset()
+      line = reset(line)
       continue
     elif mainsect == "if":
       subsect = parse(code[line], 3, list("/"))
@@ -196,7 +192,7 @@ def run(filename):
           print("Error on Line "+str(line+1)+": line doesn't exist")
           quit()
         line = templine - 1
-      reset()
+      line = reset(line)
       continue
     elif mainsect == "in":
       subsect = parse(code[line], 3, list("/"))
@@ -205,10 +201,10 @@ def run(filename):
           quit()
       variablenum = variables.index(subsect)
       variabledata[variablenum] = input()
-      reset()
+      line = reset(line)
       continue
     elif mainsect == "":
-      reset()
+      line = reset(line)
       continue
     else:
       print("Error on Line "+str(line+1)+": command unknown")
