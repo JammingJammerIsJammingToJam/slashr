@@ -14,8 +14,9 @@ def reset():
 def parse(text, start, chars):
   i = 0
   returnVal = ""
-  while str(text)[start+i] not in chars:
-    returnVal += str(text)[start+i]
+  temptext = str(text)
+  while temptext[start+i] not in chars:
+    returnVal += temptext[start+i]
     i += 1
   return returnVal
 
@@ -68,19 +69,18 @@ def math(line, start, linenum):
     one = variabledata[variables.index(subsect)]
   else:
     one = text
-  length = len(str(text))
-  text = line[start+length]
+  text = line[start+leng]
   if text not in charss:
     print("Error on Line "+str(linenum+1)+": operation not found")
     quit()
   operation = text
-  text = line[start+length+1]
+  text = line[start+leng+1]
   if text in charsss:
     operation += text
     leng += 1
   text = parse(line + "¬", start+1+leng, "¬")
   if text[0] == ":":
-    subsect = parse(line+"¬", start+2+leng, "¬")
+    subsect = text[1:]
     if not subsect in variables:
       print("Error on Line "+str(linenum+1)+": variable not declared")
       quit()
