@@ -52,7 +52,7 @@ def operatin(one, two, operation, line):
 
 
 charss = ["*", "+", "-", "|", "%", "^", ">", "<", "="]
-charsss = ["="]
+charsss = ["=", "<"]
 def math(line, start, linenum):
   global charss
   global charsss
