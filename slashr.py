@@ -63,7 +63,7 @@ def math(line, start, linenum):
     text = "-" + parse(line, 1, charss)
   else:
     text = parse(line, start, charss)
-  leng = len(str(text))
+  leng = len(text)
   if text[0] == ":":
     subsect = text[1:]
     if not subsect in variables:
