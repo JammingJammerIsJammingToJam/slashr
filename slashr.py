@@ -6,6 +6,7 @@ variables = []
 variabledata = []
 from decimal import Decimal
 from functools import cache
+
 def reset(line):
   global mainsect
   global subsect
@@ -118,7 +119,6 @@ def run(filename):
               quit()
             subsect = variabledata[variables.index(subsect)]
           variabledata[variablenum] = subsect
-
       line = reset(line)
       continue
     elif mainsect == "out":
