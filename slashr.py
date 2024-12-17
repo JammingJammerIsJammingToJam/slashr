@@ -50,7 +50,6 @@ def operatin(one, two, operation, line):
   print("Error on Line "+str(line+1)+": operation not found")
   quit()
 
-
 charss = ["*", "+", "-", "|", "%", "^", ">", "<", "="]
 charsss = ["=", "<"]
 def math(line, start, linenum):
