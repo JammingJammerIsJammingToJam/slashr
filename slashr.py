@@ -34,7 +34,7 @@ def operatin(one, two, operation, line):
   if operation == "%":
     return Decimal(one) % Decimal(two)
   if operation == "^":
-    return Decimal(one) % Decimal(two)
+    return Decimal(one) ** Decimal(two)
   if operation == ">":
     return Decimal(one) > Decimal(two)
   if operation == "<":
