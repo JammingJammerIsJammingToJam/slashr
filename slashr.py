@@ -14,11 +14,10 @@ def reset(line):
   return line+1
 
 def parse(text, start, chars):
-  i = 0
+  i = start
   returnVal = ""
-  temptext = str(text)
-  while temptext[start+i] not in chars:
-    returnVal += temptext[start+i]
+  while text[i] not in chars:
+    returnVal += text[i]
     i += 1
   return returnVal
 
