@@ -1,4 +1,3 @@
-#line = 0
 import sys
 sys.setrecursionlimit(2147483647)
 import os.path
