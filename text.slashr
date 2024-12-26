@@ -4,5 +4,6 @@ go/:x/ Goes to line x
 let/x/6/ Sets the value of x to 6
 go/2/ Goes to line 2
 out/:x/ Prints the value of x
+clear/
 if/(:x>=1)/2/
 out/Hello World!/

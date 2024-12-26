@@ -1,6 +1,7 @@
 import sys
 sys.setrecursionlimit(2147483647)
 import os.path
+import os
 variables = []
 variabledata = []
 from decimal import Decimal
@@ -93,6 +94,7 @@ def math(line, start, linenum):
 def run(filename):
   cod = open(filename, "r")
   code = cod.readlines()
+  del cod
   global mainsect
   global subsect
   line = reset(-1)
@@ -218,6 +220,10 @@ def run(filename):
         print("Error on Line "+str(line+1)+": file not found")
         quit()
       run(subsect)
+      line = reset(line)
+      continue
+    elif mainsect == "clear":
+      os.system("clear")
       line = reset(line)
       continue
     elif mainsect == "":
