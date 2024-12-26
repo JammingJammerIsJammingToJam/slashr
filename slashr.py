@@ -100,7 +100,10 @@ def run(filename):
   line = reset(-1)
   length = len(code)
   while line < length:
-    mainsect = parse(code[line], 0, list("/"))
+    try:
+      mainsect = parse(code[line], 0, list("/"))
+    except:
+      mainsect == ""
     if mainsect == "let":
       subsect = parse(code[line], 4, list("/"))
       if subsect in variables:
