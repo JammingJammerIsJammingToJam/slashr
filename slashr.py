@@ -48,11 +48,23 @@ def operatin(one, two, operation, line):
     return Decimal(one) <= Decimal(two)
   if operation == "><":
     return Decimal(one) != Decimal(two)
+  if operation == '"+':
+    return one + two
+  if operation == '"*':
+    if Decimal(two) % 1 != 0 or Decimal(two) < 0:
+      print("Error on Line "+str(line+1)+ ": expected positive integer")
+      quit()
+    return one * Decimal(two)
+  if operation == '"=':
+    if Decimal(two) % 1 != 0 or Decimal(two) < 0:
+      print("Error on Line "+str(line+1)+ ": expected positive integer")
+      quit()
+    return one[Decimal(two)]
   print("Error on Line "+str(line+1)+": operation not found")
   quit()
 
-charss = ["*", "+", "-", "|", "%", "^", ">", "<", "="]
-charsss = ["=", "<"]
+charss = ["*", "+", "-", "|", "%", "^", ">", "<", "=", '"']
+charsss = ["=", "<", "+", "*"]
 def math(line, start, linenum):
   global charss
   global charsss
