@@ -1,11 +1,12 @@
-#line = 0
 import sys
 sys.setrecursionlimit(2147483647)
 import os.path
+import os
 variables = []
 variabledata = []
 from decimal import Decimal
 from functools import cache
+
 def reset(line):
   global mainsect
   global subsect
@@ -14,11 +15,10 @@ def reset(line):
   return line+1
 
 def parse(text, start, chars):
-  i = 0
+  i = start
   returnVal = ""
-  temptext = str(text)
-  while temptext[start+i] not in chars:
-    returnVal += temptext[start+i]
+  while text[i] not in chars:
+    returnVal += text[i]
     i += 1
   return returnVal
 
@@ -35,7 +35,7 @@ def operatin(one, two, operation, line):
   if operation == "%":
     return Decimal(one) % Decimal(two)
   if operation == "^":
-    return Decimal(one) % Decimal(two)
+    return Decimal(one) ** Decimal(two)
   if operation == ">":
     return Decimal(one) > Decimal(two)
   if operation == "<":
@@ -46,12 +46,13 @@ def operatin(one, two, operation, line):
     return Decimal(one) >= Decimal(two)
   if operation == "<=":
     return Decimal(one) <= Decimal(two)
+  if operation == "><":
+    return Decimal(one) != Decimal(two)
   print("Error on Line "+str(line+1)+": operation not found")
   quit()
 
-
 charss = ["*", "+", "-", "|", "%", "^", ">", "<", "="]
-charsss = ["="]
+charsss = ["=", "<"]
 def math(line, start, linenum):
   global charss
   global charsss
@@ -62,7 +63,7 @@ def math(line, start, linenum):
     text = "-" + parse(line, 1, charss)
   else:
     text = parse(line, start, charss)
-  leng = len(str(text))
+  leng = len(text)
   if text[0] == ":":
     subsect = text[1:]
     if not subsect in variables:
@@ -93,12 +94,16 @@ def math(line, start, linenum):
 def run(filename):
   cod = open(filename, "r")
   code = cod.readlines()
+  del cod
   global mainsect
   global subsect
   line = reset(-1)
   length = len(code)
   while line < length:
-    mainsect = parse(code[line], 0, list("/"))
+    try:
+      mainsect = parse(code[line], 0, list("/"))
+    except:
+      mainsect == ""
     if mainsect == "let":
       subsect = parse(code[line], 4, list("/"))
       if subsect in variables:
@@ -118,7 +123,6 @@ def run(filename):
               quit()
             subsect = variabledata[variables.index(subsect)]
           variabledata[variablenum] = subsect
-
       line = reset(line)
       continue
     elif mainsect == "out":
@@ -219,6 +223,10 @@ def run(filename):
         print("Error on Line "+str(line+1)+": file not found")
         quit()
       run(subsect)
+      line = reset(line)
+      continue
+    elif mainsect == "clear":
+      os.system("clear")
       line = reset(line)
       continue
     elif mainsect == "":
