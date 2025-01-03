@@ -24,6 +24,18 @@ def parse(text, start, chars):
 
 @cache
 def operatin(one, two, operation, line):
+  if operation[0] != '"' and operation != "=":
+    try:
+      Decimal(one)
+    except:
+      print("Error on Line "+str(line+1)+ ": expected number")
+      quit()
+  if operation == '"*' or '"=':
+    try:
+      Decimal(two)
+    except:
+      print("Error on Line "+str(line+1)+ ": expected number")
+      quit()
   if operation == "*":
     return Decimal(one) * Decimal(two)
   if operation == "+":
@@ -41,7 +53,7 @@ def operatin(one, two, operation, line):
   if operation == "<":
     return Decimal(one) < Decimal(two)
   if operation == "=":
-    return Decimal(one) == Decimal(two)
+    return one == two
   if operation == ">=":
     return Decimal(one) >= Decimal(two)
   if operation == "<=":
