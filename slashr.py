@@ -1,4 +1,5 @@
 import sys
+import random
 sys.setrecursionlimit(2147483647)
 import os.path
 import os
@@ -72,11 +73,13 @@ def operatin(one, two, operation, line):
       print("Error on Line "+str(line+1)+ ": expected positive integer")
       quit()
     return one[int(two)]
+  if operation == '<>':
+    return random.randint(int(one), int(two))
   print("Error on Line "+str(line+1)+": operation not found")
   quit()
 
 charss = ["*", "+", "-", "|", "%", "^", ">", "<", "=", '"']
-charsss = ["=", "<", "+", "*"]
+charsss = ["=", "<", "+", "*", ">"]
 def math(line, start, linenum):
   global charss
   global charsss
