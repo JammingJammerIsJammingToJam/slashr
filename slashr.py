@@ -31,7 +31,7 @@ def operatin(one, two, operation, line):
     except:
       print("Error on Line "+str(line+1)+ ": expected number")
       quit()
-  if operation == '"*' or operation == '"=':
+  if operation == '"*' or operation == '"=' or operation == '"-':
     try:
       Decimal(two)
     except:
@@ -73,13 +73,19 @@ def operatin(one, two, operation, line):
       print("Error on Line "+str(line+1)+ ": expected positive integer")
       quit()
     return one[int(two)]
+  if operation == '"-':
+    if Decimal(two) % 1 != 0 or Decimal(two) < 0:
+      print("Error on Line "+str(line+1)+ ": expected positive integer")
+      quit()
+    temp = int(two)
+    return one[0:temp]+one[temp+1::]
   if operation == '<>':
     return random.randint(int(one), int(two))
   print("Error on Line "+str(line+1)+": operation not found")
   quit()
 
 charss = ["*", "+", "-", "|", "%", "^", ">", "<", "=", '"']
-charsss = ["=", "<", "+", "*", ">"]
+charsss = ["=", "<", "+", "*", ">", "-"]
 def math(line, start, linenum):
   global charss
   global charsss
