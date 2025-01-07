@@ -3,8 +3,8 @@ import random
 sys.setrecursionlimit(2147483647)
 import os.path
 import os
-variables = []
-variabledata = []
+variables = ["slsh", "opbr", "clbr"]
+variabledata = ["/", "(", ")"]
 from decimal import Decimal
 from functools import cache
 
