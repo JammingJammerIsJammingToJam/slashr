@@ -54,7 +54,7 @@ def operatin(one, two, operation, line):
   if operation == "<":
     return Decimal(one) < Decimal(two)
   if operation == "=":
-    return one == two
+    return str(one) == two
   if operation == ">=":
     return Decimal(one) >= Decimal(two)
   if operation == "<=":
