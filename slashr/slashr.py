@@ -268,4 +268,3 @@ def run(filename):
     else:
       print("Error on Line "+str(line+1)+": command unknown")
       quit()
-run("text.slashr")
