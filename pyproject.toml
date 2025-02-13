@@ -10,4 +10,4 @@ classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 
 [project.urls]
-Home = "https://github.com/JammingJammerIsJammingToJam/slashr"
+Home = "https://github.com/JammingJammerIsJammingToJam/slashd"
